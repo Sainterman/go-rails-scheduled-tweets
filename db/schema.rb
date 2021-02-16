@@ -10,15 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_15_044530) do
+ActiveRecord::Schema.define(version: 2021_02_15_173210) do
 
   create_table "profiles", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
-    t.string "twitter"
-    t.string "linkedin"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "socials", force: :cascade do |t|
+    t.string "name"
+    t.string "link"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "profile_id"
+    t.index ["profile_id"], name: "index_socials_on_profile_id"
+  end
+
+  add_foreign_key "socials", "profiles"
 end

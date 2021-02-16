@@ -5,22 +5,27 @@
 <thead>
     <tr>
         <th scope="col">#</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Destroy</th>
         <th scope="col">Name</th>
         <th scope="col">e-mail</th>
-        <th scope="col">Twtitter</th>
-        <th scope="col">Linkedin</th>
     </tr>
+</thead>
+    <tbody>
     <% @profiles.each do |profile| %>
         <tr>
             <th scope="row"><%= profile.id %></th>
+            <td><%= link_to 'Edit', edit_profile_path(profile) %></td>
+            <td><%= link_to 'Destroy', profile, method: :delete, data: {confirm: "are you sure?"} %></td>
             <td><%= profile.name %></td>
             <td><%= profile.email %></td>
-            <td><%= profile.twitter %></td>
-            <td><%= profile.linkedin %></td>
-            <td><%= link_to 'Edit', edit_profile_path(profile), class: "nav-link" %><td>
-            <td><%= link_to 'Destroy', profile, method: :delete, data: {confirm: "are you sure?"}, class: "nav-link" %><td>
+            <% if profile.socials %>
+                <% profile.socials.each do |social| %>
+                    <td><%= social.name %>: <%= social.link %></td>
+                <% end %>
+            <% end %>
         </tr>
     <% end %>
-</thead>
+    </tbody>
 </table>
         
