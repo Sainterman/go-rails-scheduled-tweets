@@ -14,7 +14,7 @@
     <tbody>
     <% @profiles.each do |profile| %>
         <tr>
-            <th scope="row"><%= profile.id %></th>
+            <th scope="row"><%= link_to profile.id, profile_path(profile) %></th>
             <td><%= link_to 'Edit', edit_profile_path(profile) %></td>
             <td><%= link_to 'Destroy', profile, method: :delete, data: {confirm: "are you sure?"} %></td>
             <td><%= profile.name %></td>

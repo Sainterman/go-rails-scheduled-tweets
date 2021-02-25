@@ -1,26 +1,42 @@
 <div class="d-flex align-items-center justify-content-center">
-    <div>
-        <h1>Create your profile</h1>
-    </div>
+  <div>
+    <h1>Create your profile</h1>
+  </div>
 </div>
-<%= form_with model: @profile, url: profiles_path do |form| %>
-
-    <% if @profile.errors.any? %>
-        <div class="alert alert-danger">
-            <% @profile.errors.full_messages.each do |message| %>
-                <div><%= message %></div>
-            <% end %>
+<%= form_for(@profile) do |form| %>
+  <% if @profile.errors.any? %>
+    <div class="alert alert-danger">
+      <% @profile.errors.full_messages.each do |message| %>
+        <div>
+          <%= message %>
         </div>
-    <% end %>
-    <div class="mb-3">
-        <%= form.label :email %>
-        <%= form.text_field :email, class:"form-control" %>
+      <% end %>
     </div>
-    <div class="mb-3">
-        <%= form.label :name %>
-        <%= form.text_field :name, class:"form-control" %>
+  <% end %>
+  <div class="form-inputs">
+    <div class="form-floating mb-3">
+    <%= form.text_field :email, class:"form-control", id: "floatingEmail" %>
+    <%= form.label :email, class: "form-label", for:"floatingEmail" %>
     </div>
-    <div class="mb-3">
-        <%= form.submit "create profile!", class:"btn btn-dark" %>
+    <div class="form-floating mb-3">
+    <%= form.text_field :name, class:"form-control", id: "floatingName" %>
+    <%= form.label :name, class: "form-label" %>
     </div>
+  </div>
+    <div data-controller="nested-form">
+      <template data-target="nested-form.template">
+        <%= form.fields_for :socials, Social.new, child_index: 'NEW_RECORD' do |social| %>
+          <%= render 'social', form: social %>
+        <% end %>
+      </template>
+        <%= form.fields_for :socials do |social| %>
+          <%= render 'social' , form: social %>
+        <% end %>
+      <div class="mb-3" data-target="nested-form.links">
+        <%= link_to 'Add Social', "#", class: "btn btn-outline-primary", data: { action: "click->nested-form#add_association" } %>
+      </div>
+    </div>
+  <div class="form-actions">
+    <%= form.button :submit, class: "btn btn-dark" %>
+  </div>
 <% end %>
