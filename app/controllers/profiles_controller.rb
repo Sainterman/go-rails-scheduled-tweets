@@ -42,6 +42,6 @@ class ProfilesController < ApplicationController
   end
 
   def profile_params
-    params.require(:profile).permit(:email, :name, socials_attributes: Social.attribute_names.map(&:to_sym).push(:_destroy))
+    params.require(:profile).permit(:email, :name, :avatar, socials_attributes: Social.attribute_names.map(&:to_sym).push(:_destroy))
   end
 end

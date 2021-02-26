@@ -5,6 +5,7 @@
 <thead>
     <tr>
         <th scope="col">#</th>
+        <th scope="col">Profile Pic</th>
         <th scope="col">Edit</th>
         <th scope="col">Destroy</th>
         <th scope="col">Name</th>
@@ -14,7 +15,8 @@
     <tbody>
     <% @profiles.each do |profile| %>
         <tr>
-            <th scope="row"><%= link_to profile.id, profile_path(profile) %></th>
+            <td scope="row"><%= link_to profile.id, profile_path(profile) %></td>
+            <td scope="row"><%= image_tag profile.avatar.variant(resize: "100x100"), class: "card-img-top" %></td>
             <td><%= link_to 'Edit', edit_profile_path(profile) %></td>
             <td><%= link_to 'Destroy', profile, method: :delete, data: {confirm: "are you sure?"} %></td>
             <td><%= profile.name %></td>
