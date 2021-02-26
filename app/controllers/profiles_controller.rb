@@ -1,4 +1,5 @@
 class ProfilesController < ApplicationController
+  before_action :set_profile, only: [:show, :edit, :update, :destroy]
   def index
     @profiles = Profile.all
   end
@@ -18,15 +19,12 @@ class ProfilesController < ApplicationController
   end
 
   def show
-    @profile = Profile.find(params[:id])
   end
 
   def edit
-    @profile = Profile.find(params[:id])
   end
 
   def update
-    @profile = Profile.find(params[:id])
     if @profile.update(profile_params)
       redirect_to(@profile)
     else
@@ -35,13 +33,18 @@ class ProfilesController < ApplicationController
   end
 
   def destroy
-    @profile = Profile.find(params[:id])
     if @profile.destroy
       redirect_to action: "index"
     end
   end
+  
+  private
 
   def profile_params
     params.require(:profile).permit(:email, :name, :avatar, socials_attributes: Social.attribute_names.map(&:to_sym).push(:_destroy))
+  end
+
+  def set_profile
+    @profile = Profile.find(params[:id])
   end
 end
