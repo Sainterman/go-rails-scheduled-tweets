@@ -5,6 +5,7 @@ class Profile < ApplicationRecord
   
   require 'uri'
   validates :email, presence: true,
-                    format: { with: URI::MailTo::EMAIL_REGEXP, message: 'must be a valid email address' }
-  validates :name, presence: true, length: { minimum: 2 }
+                    format: { with: URI::MailTo::EMAIL_REGEXP, message: 'must be a valid email address' },
+                    uniqueness: { case_sensitive: false }
+  validates :name, presence: true, uniqueness: { case_sensitive: false }, length: { minimum: 2 }
 end
